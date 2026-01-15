@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Bitcoin in the UK: buy, store, trade, and master crypto with interactive tools, live price, and expert guides. Be more Bitcoin today.">
+    <meta name="keywords" content="Bitcoin UK, buy Bitcoin UK, Bitcoin wallet, Bitcoin ATM UK, learn Bitcoin, Bitcoin trading game, Bitcoin quiz">
+    <meta name="author" content="Be More Bitcoin">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Be More Bitcoin | Learn, Buy & Store Bitcoin in the UK">
+    <meta property="og:description" content="Interactive tools, live price, UK Bitcoin ATMs, and expert guides. Start your Bitcoin journey today.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bemorebitcoin.com">
+    <meta property="og:image" content="https://bemorebitcoin.com/og-image.jpg">
+    <meta property="og:site_name" content="Be More Bitcoin">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bemorebitcoin.com/og-image.jpg">
+
+    <!-- Canonical & Favicon -->
+    <link rel="canonical" href="https://bemorebitcoin.com">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Title -->
+    <title>Be More Bitcoin | Learn, Buy & Store Bitcoin in the UK</title>
+
+    <!-- Critical CSS (Inline) -->
+    <style>
+        :root {
+            --btc-orange: #f7931a;
+            --btc-dark: #1a1a1a;
+            --btc-light: #fff8f0;
+            --text: #2d2d2d;
+            --text-light: #f5f5f5;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --btc-light: #1a1a1a;
+            --text: #f0f0f0;
+            --text-light: #ddd;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: var(--btc-light);
+            color: var(--text);
+            line-height: 1.7;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+        a { color: var(--btc-orange); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header, footer { background: var(--btc-orange); color: white; }
+        .btn {
+            display: inline-block;
+            background: var(--btc-orange);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(247,147,26,0.3);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(247,147,26,0.4); }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #f7931a 0%, #ff6b00 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '₿';
+            position: absolute;
+            font-size: 30rem;
+            opacity: 0.05;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 16px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .hero p { font-size: 1.3rem; max-width: 700px; margin: 0 auto 30px; }
+        .live-price {
+            background: rgba(0,0,0,0.2);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav .container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
+        nav ul { display: flex; gap: 24px; list-style: none; }
+        nav a { color: var(--text); font-weight: 600; }
+        .theme-toggle { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+
+        /* Sections */
+        section { padding: 60px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: var(--btc-orange); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+        .card h3 { color: var(--btc-orange); margin-bottom: 12px; font-size: 1.4rem; }
+        .card .btn { margin-top: 16px; }
+
+        /* Stats */
+        .stats { background: var(--btc-dark); color: white; text-align: center; padding: 40px 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
+        .stat { font-size: 2.5rem; font-weight: bold; }
+        .stat-label { font-size: 0.9rem; opacity: 0.8; }
+
+        /* Footer */
+        footer { text-align: center; padding: 40px 20px; font-size: 0.9rem; }
+        footer a { color: white; text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            nav ul { flex-direction: column; gap: 12px; }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .live { animation: pulse 2s infinite; }
+    </style>
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOccupationalProgram",
+      "name": "Be More Bitcoin",
+      "description": "Learn Bitcoin in the UK with interactive tools, live price tracking, and expert guides.",
+      "url": "https://bemorebitcoin.com",
+      "provider": {
+        "@type": "Organization",
+        "name": "Be More Bitcoin",
+        "sameAs": ["https://x.com/bemorebitcoin"]
+      },
+      "educationalCredentialAwarded": "Bitcoin Knowledge Certificate",
+      "hasCourse": [
+        {
+          "@type": "Course",
+          "name": "Bitcoin Trading Game",
+          "url": "https://bemorebitcoin.com/trading-game"
+        },
+        {
+          "@type": "Course",
+          "name": "Bitcoin Quiz",
+          "url": "https://bemorebitcoin.com/quiz"
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Skip Link -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="hero">
+        <div class="container">
+            <h1>Be More Bitcoin</h1>
+            <p>Learn, buy, store, and master Bitcoin in the UK with interactive tools and live data.</p>
+            <div class="live-price" id="btc-price">Loading price...</div>
+            <a href="#tools" class="btn">Explore Tools</a>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div>
+                <strong>Be More Bitcoin</strong>
+            </div>
+            <ul>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#why">Why Bitcoin?</a></li>
+                <li><a href="https://coinatmradar.com/" target="_blank">ATM Map</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main" class="container">
+
+        <!-- Benefits -->
+        <section id="benefits">
+            <h2 class="section-title">Why Bitcoin Matters</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Global & Borderless</h3>
+                    <p>Send value anywhere in minutes — no banks, no borders, no permission.</p>
+                </div>
+                <div class="card">
+                    <h3>Inflation Resistant</h3>
+                    <p>Only 21 million ever. A hedge against currency devaluation.</p>
+                </div>
+                <div class="card">
+                    <h3>Fraud-Proof Ledger</h3>
+                    <p>Immutable, transparent, and auditable by anyone.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Stats -->
+        <section class="stats">
+            <div class="container stats-grid">
+                <div>
+                    <div class="stat" id="market-cap">$1.4T</div>
+                    <div class="stat-label">Market Cap</div>
+                </div>
+                <div>
+                    <div class="stat" id="block-height">863,000</div>
+                    <div class="stat-label">Blocks Mined</div>
+                </div>
+                <div>
+                    <div class="stat live">99.98%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div>
+                    <div class="stat">21M</div>
+                    <div class="stat-label">Total Supply</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools -->
+        <section id="tools">
+            <h2 class="section-title">Interactive Bitcoin Tools</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Bitcoin Trading Game</h3>
+                    <p>Start in 2010. Beat the market. Join the 21 Club.</p>
+                    <a href="https://bemorebitcoin.com/trading-game" class="btn">Play Now</a>
+                </div>
+                <div class="card">
+                    <h3>Wallet Checker</h3>
+                    <p>View balance, transactions, and history of any address.</p>
+                    <a href="https://bemorebitcoin.com/wallet-checker" class="btn">Check Wallet</a>
+                </div>
+                <div class="card">
+                    <h3>Bitcoin Quiz</h3>
+                    <p>Test your knowledge across 15+ years of Bitcoin history.</p>
+                    <a href="https://bemorebitcoin.com/quiz" class="btn">Take Quiz</a>
+                </div>
+                <div class="card">
+                    <h3>If I Bought...</h3>
+                    <p>See what £100 in Bitcoin 5 years ago would be worth today.</p>
+                    <a href="https://bemorebitcoin.com/if-i-bought" class="btn">Calculate</a>
+                </div>
+                <div class="card">
+                    <h3>Share per Country</h3>
+                    <p>See how many bitcoin each country should own, based on population and GDP.</p>
+                    <a href="https://bemorebitcoin.com/countryshare" class="btn">Calculate</a>
+                </div>
+                <div class="card">
+                    <h3>Store your Bitcoin</h3>
+                    <p>Options to store your Bitcoin.</p>
+                    <a href="https://bemorebitcoin.com/store" class="btn">Calculate</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Bitcoin -->
+        <section id="why">
+            <h2 class="section-title">Why Bitcoin Wins</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <p><strong>Undefeated since 2009.</strong> Survived bans, crashes, and FUD.</p>
+                </div>
+                <div class="card">
+                    <p><strong>Most decentralized.</strong> No CEO, no HQ, no single point of failure.</p>
+                </div>
+                <div class="card">
+                    <p><strong>Hard-capped supply.</strong> 21 million. No inflation. No printing.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 <strong>Be More Bitcoin</strong>. Empowering the UK with knowledge and tools.</p>
+            <p><a href="/contact">Contact</a> • <a href="/privacy">Privacy</a> • Made with ₿ in the UK</p>
+        </div>
+    </footer>
+
+    <!-- Live Bitcoin Price Script -->
+    <script>
+        // Fetch live BTC price
+        async function updateBTCPrice() {
+            try {
+                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,gbp');
+                const data = await res.json();
+                const usd = data.bitcoin.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                const gbp = data.bitcoin.gbp.toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
+                document.getElementById('btc-price').innerHTML = `${usd} | ${gbp} <span class="live">● LIVE</span>`;
+            } catch (e) {
+                document.getElementById('btc-price').textContent = 'Live price unavailable';
+            }
+        }
+
+        // Update every 30 seconds
+        updateBTCPrice();
+        setInterval(updateBTCPrice, 30000);
+
+        // Dark mode toggle
+        const toggle = document.querySelector('.theme-toggle');
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+
+        toggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            toggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Update block height (approx every 10 min)
+        let block = 863000;
+        setInterval(() => {
+            block += Math.random() > 0.5 ? 1 : 0;
+            document.getElementById('block-height').textContent = block.toLocaleString();
+        }, 600000);
+    </script>
+
+    <!-- Font (Optional: Load Inter for better typography) -->
+    <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
+</body>
+</html>
