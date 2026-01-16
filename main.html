@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+HTML<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,167 +6,163 @@
     <title>Thunder Reviews on the Lightning Network</title>
     <style>
         body {
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px 15px;
-            color: #222;
-            background: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            background-color: #6ac5f4; /* Powder Blue - Gulf GT40 base */
+            color: #001f3f; /* Dark blue/navy for text */
         }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        header {
+            background: linear-gradient(to right, #001f3f, #092b2b, #001f3f); /* Dark blue stripe feel */
+            color: #ff671f; /* Orange text for impact */
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 20px,
+                rgba(255, 103, 31, 0.15) 20px,
+                rgba(255, 103, 31, 0.15) 40px
+            ); /* Subtle orange racing stripe overlay */
+            pointer-events: none;
+        }
+        h1, h2, h3 {
+            margin: 0.5em 0;
+            color: #ff671f; /* Marigold/Orange for headings */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
         }
         h1 {
-            text-align: center;
-            color: #1a1a8f;
-            margin-bottom: 0.4em;
+            font-size: 3em;
+            letter-spacing: 2px;
         }
-        h2 {
-            color: #2c3e50;
-            text-align: center;
-            margin: 2em 0 1em;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.92); /* Semi-transparent white for readability on blue bg */
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            margin-top: -40px; /* Overlap header slightly for dynamic feel */
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-left: 8px solid #ff671f; /* Orange stripe on left like car livery */
+            background: #f0f8ff; /* Very light blue tint */
+            border-radius: 8px;
         }
         ul {
-            padding-left: 1.8em;
-            margin: 1.2em 0;
+            list-style-type: none;
+            padding-left: 0;
         }
-        .comparison {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin: 2.5em 0;
+        ul li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 30px;
         }
-        .side {
-            flex: 1;
-            min-width: 320px;
-        }
-        .coffee-row {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin: 1.5em 0;
-        }
-        .coffee-card {
-            background: #f0f8ff;
-            padding: 20px 25px;
-            border-radius: 10px;
-            text-align: center;
-            min-width: 220px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .coffee-card h3 {
-            margin: 0.3em 0 0.6em;
-            color: #2c3e50;
-        }
-        .stars {
+        ul li::before {
+            content: "→";
+            color: #ff671f;
+            position: absolute;
+            left: 0;
             font-weight: bold;
-            color: #006600;
-            font-size: 1.15em;
         }
-        .benefits li {
-            margin-bottom: 0.7em;
+        .highlight {
+            background: #ff671f;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
         }
-        .images {
+        footer {
             text-align: center;
-            margin-top: 2.5em;
-        }
-        .images p {
-            color: #555;
-            font-style: italic;
-            margin: 1em 0;
-        }
-        @media (max-width: 800px) {
-            .comparison { flex-direction: column; }
-            .coffee-row { gap: 20px; }
+            padding: 20px;
+            color: #001f3f;
+            font-size: 0.9em;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+    <header>
+        <h1>Thunder Reviews</h1>
+        <p style="font-size: 1.4em; margin-top: 10px;">Powered by the Lightning Network • Fast. Trusted. Real Buyer Feedback.</p>
+    </header>
 
-<h1>Thunder Reviews on the Lightning Network</h1>
+    <div class="container">
 
-<h2>Features</h2>
-<ul>
-    <li>Reviews of Products and Services tracked on the Lightning Network</li>
-    <li>Reviews from true buyers validated by spend</li>
-    <li>Ratings and feedback</li>
-    <li>Over time</li>
-    <li>By different customer group</li>
-    <li>By spend</li>
-    <li>Reviews built into the payment provider journey</li>
-    <li>Instant opportunity to review during payment</li>
-    <li>Followup reviews triggered through Lightning payments to the original payee</li>
-</ul>
-
-<div class="comparison">
-
-    <div class="side">
-        <h2>Current System</h2>
-        <div class="coffee-row">
-            <div class="coffee-card">
-                <h3>Alpha Coffee</h3>
-                <div class="stars">4.7 Stars (240 Reviews)</div>
-            </div>
-            <div class="coffee-card">
-                <h3>1st Coffee</h3>
-                <div class="stars">4.8 Stars (2,300 Reviews)</div>
-            </div>
+        <div class="section">
+            <h2>Features</h2>
+            <ul>
+                <li>Reviews of Products and Services tracked on the Lightning Network</li>
+                <li>Reviews from true buyers validated by spend</li>
+                <li>Ratings and feedback</li>
+                <li>Over time</li>
+                <li>By different customer group</li>
+                <li>By spend</li>
+                <li>Reviews built into the payment provider journey</li>
+                <li>Instant opportunity to review during payment</li>
+                <li>Followup reviews triggered through Lightning payments to the original payee</li>
+            </ul>
         </div>
-        <p style="text-align:center; font-style:italic; margin-top:1.5em;">
-            Reviews spread across multiple platforms, platform specific.<br>
-            Review score and number of reviews are key to make your decision.<br>
-            Reviews by high spend, low spend and no spend customers are all equally valued.
-        </p>
+
+        <div class="section">
+            <h2>Current System</h2>
+            <h3>Alpha Coffee</h3>
+            <p><span class="highlight">4.7 Stars (240 Reviews)</span></p>
+
+            <h3>1st Coffee</h3>
+            <p><span class="highlight">4.8 Stars (2,300 Reviews)</span></p>
+            <p>Reviews spread across multiple platforms, platform specific.</p>
+            <p>Review score and number of reviews are key to make your decision.</p>
+            <p>Reviews by high spend, low spend and no spend customers are all equally valued.</p>
+        </div>
+
+        <div class="section">
+            <h2>Thunder Reviews</h2>
+            <h3>Alpha Coffee</h3>
+            <p><span class="highlight">4.8 Stars</span></p>
+            <p>(200 reviews in the last 30 days)</p>
+            <p>Average Spend $20.40</p>
+
+            <h3>1st Coffee</h3>
+            <p><span class="highlight">4.1 Stars</span></p>
+            <p>(50 reviews last 30 days)</p>
+            <p>Average Spend $15.60</p>
+            <p>Recency and amount spent are key to understanding true performance from reviews reporting.</p>
+        </div>
+
+        <div class="section">
+            <h2>Benefits of Thunder Reviews</h2>
+            <ul>
+                <li>Any lightning payment can be routed through Thunder Reviews providing opportunities for greater customer feedback.</li>
+                <li>As well as score and number of reviews, recency of reviews and purchase value can be taken into account.</li>
+                <li>Once established filtering by connections and trusted reviewers you can view by ratings of those you trust most with similar taste to you.</li>
+                <li>Emerging trends and significant changes in performance can be identified by customers and business owners more quickly.</li>
+                <li>High performing staff, time of day or products can be identified more easily.</li>
+            </ul>
+        </div>
+
+        <!-- If you have images (e.g. placeholders mentioned), add them here like: -->
+        <!-- <img src="image1.png" alt="Thunder Reviews Example" style="width:100%; border-radius:8px; margin:20px 0;"> -->
+
     </div>
 
-    <div class="side">
-        <h2>Thunder Reviews</h2>
-        <div class="coffee-row">
-            <div class="coffee-card">
-                <h3>Alpha Coffee</h3>
-                <div class="stars">4.8 Stars</div>
-                <div>(200 reviews in the last 30 days)</div>
-                <div>Average Spend $20.40</div>
-            </div>
-            <div class="coffee-card">
-                <h3>1st Coffee</h3>
-                <div class="stars">4.1 Stars</div>
-                <div>(50 reviews last 30 days)</div>
-                <div>Average Spend $15.60</div>
-            </div>
-        </div>
-        <p style="text-align:center; font-weight:bold; margin-top:1.2em;">
-            Recency and amount spent are key to understanding true performance from reviews reporting.
-        </p>
-    </div>
-
-</div>
-
-<h2>Benefits of Thunder Reviews</h2>
-<ul class="benefits">
-    <li>Any lightning payment can be routed through Thunder Reviews providing opportunities for greater customer feedback.</li>
-    <li>As well as score and number of reviews, recency of reviews and purchase value can be taken into account.</li>
-    <li>Once established filtering by connections and trusted reviewers you can view by ratings of those you trust most with similar taste to you.</li>
-    <li>Emerging trends and significant changes in performance can be identified by customers and business owners more quickly.</li>
-    <li>High performing staff, time of day or products can be identified more easily.</li>
-</ul>
-
-<div class="images">
-    <p>[image1.png – originally included in document]</p>
-    <p>[image2.png – originally included in document]</p>
-    <p style="font-size:0.95em; margin-top:2em;">
-        (Replace the lines above with actual &lt;img src="..."&gt; tags if you have the image files)
-    </p>
-</div>
-
-</div>
+    <footer>
+        <p>Thunder Reviews • Lightning Network • Inspired by speed, precision, and trust — just like the Gulf GT40.</p>
+    </footer>
 
 </body>
 </html>
