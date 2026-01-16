@@ -30,14 +30,26 @@
             bottom: 0;
             pointer-events: none;
         }
+
+/* Target your page title — update selector if needed */
+h1, .site-title, .page-title {
+  font-size: 72px;        /* desktop size */
+  line-height: 1.1;
+  font-weight: bold;       /* optional */
+}
+
+/* Mobile-friendly size */
+@media (max-width: 768px) {
+  h1, .site-title, .page-title {
+    font-size: 48px;       /* smaller on phones */
+  }
+}
+
+        
         h1, h2, h3 {
             margin: 0.5em 0;
             color: #ff671f; /* Marigold/Orange for headings */
             text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-        }
-        h1 {
-            font-size: 3em;
-            letter-spacing: 2px;
         }
         .container {
             max-width: 1000px;
