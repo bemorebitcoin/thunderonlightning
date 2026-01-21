@@ -1,3 +1,4 @@
+# Use rocker base with install2.r available
 FROM rocker/tidyverse:latest
 
 # Install system dependencies (often needed for R packages like httr/jsonlite)
@@ -20,5 +21,5 @@ COPY plumber.R /plumber/plumber.R
 # Expose port
 EXPOSE 8000
 
-# Start Plumber
-CMD ["R", "-e", "pr(\"/plumber/plumber.R\")$run(host=\"0.0.0.0\", port=8000)"]
+# Start Plumber with library load
+CMD ["R", "-e", "library(plumber); pr(\"/plumber/plumber.R\")$run(host=\"0.0.0.0\", port=8000)"]
