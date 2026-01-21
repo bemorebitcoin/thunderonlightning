@@ -21,7 +21,7 @@ function(id) {
   list(
     tag = "payRequest",
     callback = paste0(
-      "https://api.yourdomain.com/lnurl/callback/", id
+      "https://thunder-lnurl-api.onrender.com/lnurl/callback/", id
     ),
     minSendable = 1000,      # millisats (1 sat)
     maxSendable = 500000,   # millisats (500 sats)
