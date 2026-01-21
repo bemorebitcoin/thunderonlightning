@@ -1,18 +1,21 @@
 FROM rstudio/plumber:latest
 
-# Install required packages
+# Install dependencies
 RUN install2.r --error \
     jsonlite \
     uuid \
     && rm -rf /tmp/downloaded_packages
 
-# Copy the Plumber script
+# Copy Plumber script
 COPY plumber.R /plumber/plumber.R
 
-RUN ls -la /plumber/
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
 
-# Expose port
+# Make executable
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 8000
 
-# Run Plumber – use double quotes for path to avoid quote issues
-CMD ["R", "-e", "pr(\"/plumber/plumber.R\")$run(host='0.0.0.0', port=8000)"]
+# Run via shell script
+CMD ["/entrypoint.sh"]
