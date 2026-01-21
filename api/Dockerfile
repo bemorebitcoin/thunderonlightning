@@ -1,21 +1,24 @@
-FROM rstudio/plumber:latest
+FROM rocker/tidyverse:latest
 
-# Install dependencies
-RUN install2.r --error \
+# Install system dependencies (often needed for R packages like httr/jsonlite)
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libxml2-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Plumber + your packages using install2.r
+RUN install2.r --error --skipinstalled \
+    plumber \
     jsonlite \
     uuid \
     && rm -rf /tmp/downloaded_packages
 
-# Copy Plumber script
+# Copy your Plumber script
 COPY plumber.R /plumber/plumber.R
 
-# Copy entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-
-# Make executable
-RUN chmod +x /entrypoint.sh
-
+# Expose port
 EXPOSE 8000
 
-# Run via shell script
-CMD ["/entrypoint.sh"]
+# Start Plumber
+CMD ["R", "-e", "pr(\"/plumber/plumber.R\")$run(host=\"0.0.0.0\", port=8000)"]
