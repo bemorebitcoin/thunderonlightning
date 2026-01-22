@@ -67,8 +67,11 @@ function(id) {
 #* Health check
 #* @get /health
 function() {
-  list(
-    status = "ok",
-    time = as.character(Sys.time())
+  jsonlite::toJSON(
+    list(
+      status = "ok",
+      time   = as.character(Sys.time())
+    ),
+    auto_unbox = TRUE
   )
 }
