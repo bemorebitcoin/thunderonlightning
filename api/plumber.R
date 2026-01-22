@@ -11,25 +11,28 @@ reviews <- new.env(parent = emptyenv())
 
 #* LNURL Pay Request
 #* @get /lnurl/pay/<id>
+#* LNURL Pay Request
+#* @get /lnurl/pay/<id>
 function(id) {
-  
+
   # Create session if not exists
   if (is.null(reviews[[id]])) {
     reviews[[id]] <- list(status = "requested")
   }
-  
+
+  # Build the correct structure – NO extra lists around scalar values
   list(
-    tag = "payRequest",
-    callback = paste0(
-      "https://thunder-lnurl-api.onrender.com/lnurl/callback/", id
-    ),
-    minSendable = 1000,      # millisats (1 sat)
-    maxSendable = 500000,   # millisats (500 sats)
-    commentAllowed = 500,
-    metadata = jsonlite::toJSON(
-      list(list("text/plain", "Thunder Review")),
+    tag           = "payRequest",                           # string
+    callback      = paste0("https://thunder-lnurl-api.onrender.com/lnurl/callback/", id),  # string – use your real Render URL
+    minSendable   = 1000L,                                  # integer (millisats)
+    maxSendable   = 500000L,                                # integer (millisats)
+    commentAllowed = 500L,                                  # integer
+    metadata      = jsonlite::toJSON(
+      list(
+        list("text/plain", "Thunder Review")
+      ),
       auto_unbox = TRUE
-    )
+    )                                                       # string – JSON array as string
   )
 }
 
