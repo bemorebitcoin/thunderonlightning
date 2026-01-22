@@ -1,11 +1,10 @@
-# Test 2026-01-22 v5
-
 library(plumber)
 library(jsonlite)
 library(uuid)
 
-# Global serializer to fix array wrapping
-#* @serializer json list(auto_unbox = TRUE)
+# Force global JSON serialization with auto_unbox
+#* @plumber
+pr()$setSerializer("json", jsonlite::toJSON, list(auto_unbox = TRUE))
 
 # In-memory store
 reviews <- new.env(parent = emptyenv())
@@ -15,7 +14,7 @@ reviews <- new.env(parent = emptyenv())
 function() {
   list(
     status = "ok",
-    time = as.character(Sys.time())
+    time   = as.character(Sys.time())
   )
 }
 
