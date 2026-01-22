@@ -2,7 +2,7 @@ library(plumber)
 library(jsonlite)
 library(uuid)
 
-# In-memory store (replace with DB later)
+# In-memory store
 reviews <- new.env(parent = emptyenv())
 
 #──────────────────────────────────────────────
@@ -10,12 +10,12 @@ reviews <- new.env(parent = emptyenv())
 #──────────────────────────────────────────────
 #* LNURL Pay Request
 #* @get /lnurl/pay/<id>
-
 function(id) {
   if (is.null(reviews[[id]])) {
     reviews[[id]] <- list(status = "requested")
   }
   
+  # Return flat list – jsonlite will serialize correctly
   list(
     tag            = "payRequest",
     callback       = paste0("https://thunder-lnurl-api.onrender.com/lnurl/callback/", id),
@@ -29,10 +29,8 @@ function(id) {
   )
 }
 
-print("DEBUG: FIXED VERSION 2026-01-22 v2")  # ← add this
-
 #──────────────────────────────────────────────
-# CALLBACK (WALLET CALLS THIS)
+# CALLBACK
 #──────────────────────────────────────────────
 #* LNURL Callback
 #* @get /lnurl/callback/<id>
@@ -55,7 +53,7 @@ function(id, amount, comment = "") {
 }
 
 #──────────────────────────────────────────────
-# STATUS (FOR SHINY POLLING)
+# STATUS
 #──────────────────────────────────────────────
 #* Review Status
 #* @get /review/status/<id>
@@ -63,8 +61,14 @@ function(id) {
   reviews[[id]] %||% list(status = "unknown")
 }
 
+#──────────────────────────────────────────────
+# HEALTH CHECK (for debugging)
+#──────────────────────────────────────────────
 #* Health check
 #* @get /health
 function() {
-  list(status = "ok", time = Sys.time())
+  list(
+    status = "ok",
+    time = as.character(Sys.time())
+  )
 }
