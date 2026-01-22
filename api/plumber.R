@@ -37,14 +37,17 @@ print("DEBUG: FIXED VERSION 2026-01-22 v2")  # ← add this
 #* LNURL Callback
 #* @get /lnurl/callback/<id>
 function(id, amount, comment = "") {
+  if (missing(amount) || !is.numeric(as.numeric(amount))) {
+    return(list(error = "Missing or invalid amount"))
+  }
   
-  # Save payment
   reviews[[id]] <- list(
     status = "paid",
-    amount = as.numeric(amount) / 1000, # sats
+    amount = as.numeric(amount) / 1000,
     comment = comment,
     time = Sys.time()
   )
+  
   list(
     pr = "lnbc1REPLACE_WITH_REAL_INVOICE",
     routes = list()
@@ -58,4 +61,10 @@ function(id, amount, comment = "") {
 #* @get /review/status/<id>
 function(id) {
   reviews[[id]] %||% list(status = "unknown")
+}
+
+#* Health check
+#* @get /health
+function() {
+  list(status = "ok", time = Sys.time())
 }
