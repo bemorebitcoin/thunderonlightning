@@ -25,11 +25,11 @@ function(id) {
   }
   
   list(
-    tag            = "payRequest",
-    callback       = paste0("https://thunder-lnurl-api.onrender.com/lnurl/callback/", id),
-    minSendable    = 1000L,
-    maxSendable    = 500000L,
-    commentAllowed = 500L,
+    tag            = "payRequest",  # No need for list() here
+    callback       = paste0("https://thunder-lnurl-api.onrender.com/lnurl/callback/", id),  # No need for list() here
+    minSendable    = 1000L,  # This is fine as-is
+    maxSendable    = 500000L,  # This is fine as-is
+    commentAllowed = 500L,  # This is fine as-is
     metadata       = jsonlite::toJSON(
       list(list("text/plain", "Thunder Review")),
       auto_unbox = TRUE
