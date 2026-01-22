@@ -45,8 +45,6 @@ function(id, amount, comment = "") {
     comment = comment,
     time = Sys.time()
   )
-  
-  # ⚠️ Replace with real Lightning invoice (placeholder for now)
   list(
     pr = "lnbc1REPLACE_WITH_REAL_INVOICE",
     routes = list()
