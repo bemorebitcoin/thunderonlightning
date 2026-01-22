@@ -11,9 +11,12 @@ reviews <- new.env(parent = emptyenv())
 #* Health check
 #* @get /health
 function() {
-  list(
-    status = "ok",
-    time = as.character(Sys.time())
+  jsonlite::toJSON(
+    list(
+      status = "ok",  
+      time = as.character(Sys.time())  
+    ),
+    auto_unbox = TRUE
   )
 }
 
@@ -25,11 +28,11 @@ function(id) {
   }
   
   list(
-    tag            = "payRequest",  # No need for list() here
-    callback       = paste0("https://thunder-lnurl-api.onrender.com/lnurl/callback/", id),  # No need for list() here
-    minSendable    = 1000L,  # This is fine as-is
-    maxSendable    = 500000L,  # This is fine as-is
-    commentAllowed = 500L,  # This is fine as-is
+    tag            = "payRequest",  
+    callback       = paste0("https://thunder-lnurl-api.onrender.com/lnurl/callback/", id),  
+    minSendable    = 1000L,  
+    maxSendable    = 500000L,  
+    commentAllowed = 500L,  
     metadata       = jsonlite::toJSON(
       list(list("text/plain", "Thunder Review")),
       auto_unbox = TRUE
