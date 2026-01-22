@@ -11,13 +11,13 @@ reviews <- new.env(parent = emptyenv())
 #* Health check
 #* @get /health
 function() {
-  jsonlite::toJSON(
-    list(
-      status = "ok",  
-      time = as.character(Sys.time())  
-    ),
-    auto_unbox = TRUE
+  response <- list(
+    status = "ok",  
+    time = as.character(Sys.time())  
   )
+  
+  # Use jsonlite to serialize without auto_unbox
+  jsonlite::toJSON(response, auto_unbox = TRUE, dataframe = "rows")
 }
 
 #* LNURL Pay Request
