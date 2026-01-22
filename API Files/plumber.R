@@ -8,7 +8,6 @@ reviews <- new.env(parent = emptyenv())
 #──────────────────────────────────────────────
 # LNURL-PAY ENTRY POINT
 #──────────────────────────────────────────────
-
 #* LNURL Pay Request
 #* @get /lnurl/pay/<id>
 function(id) {
@@ -18,15 +17,14 @@ function(id) {
     reviews[[id]] <- list(status = "requested")
   }
   
+  # Build flat structure – scalars directly, no extra list()
   list(
-    tag = "payRequest",
-    callback = paste0(
-      "https://api.yourdomain.com/lnurl/callback/", id
-    ),
-    minSendable = 1000,      # millisats (1 sat)
-    maxSendable = 500000,   # millisats (500 sats)
+    tag            = "payRequest",
+    callback       = paste0("https://thunder-lnurl-api.onrender.com/lnurl/callback/", id),
+    minSendable    = 1000,
+    maxSendable    = 500000,
     commentAllowed = 500,
-    metadata = jsonlite::toJSON(
+    metadata       = jsonlite::toJSON(
       list(list("text/plain", "Thunder Review")),
       auto_unbox = TRUE
     )
@@ -36,20 +34,17 @@ function(id) {
 #──────────────────────────────────────────────
 # CALLBACK (WALLET CALLS THIS)
 #──────────────────────────────────────────────
-
 #* LNURL Callback
 #* @get /lnurl/callback/<id>
 function(id, amount, comment = "") {
   
   # Save payment
   reviews[[id]] <- list(
-    status  = "paid",
-    amount  = as.numeric(amount) / 1000, # sats
+    status = "paid",
+    amount = as.numeric(amount) / 1000, # sats
     comment = comment,
-    time    = Sys.time()
+    time = Sys.time()
   )
-  
-  # ⚠️ Replace with real Lightning invoice
   list(
     pr = "lnbc1REPLACE_WITH_REAL_INVOICE",
     routes = list()
@@ -59,7 +54,6 @@ function(id, amount, comment = "") {
 #──────────────────────────────────────────────
 # STATUS (FOR SHINY POLLING)
 #──────────────────────────────────────────────
-
 #* Review Status
 #* @get /review/status/<id>
 function(id) {
