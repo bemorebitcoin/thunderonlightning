@@ -2,10 +2,6 @@ library(plumber)
 library(jsonlite)
 library(uuid)
 
-# Force global JSON serialization with auto_unbox
-#* @plumber
-pr()$setSerializer("json", jsonlite::toJSON, list(auto_unbox = TRUE))
-
 # In-memory store
 reviews <- new.env(parent = emptyenv())
 
@@ -29,7 +25,7 @@ function(id) {
   
   list(
     tag            = "payRequest",
-    callback       = paste0("https://thunder-lnurl-api.onrender.com/lnurl/callback/", id),
+    callback       = paste0("https://thunderonlightning.onrender.com/lnurl/callback/", id),
     minSendable    = 1000L,
     maxSendable    = 500000L,
     commentAllowed = 500L,
@@ -38,4 +34,30 @@ function(id) {
       auto_unbox = TRUE
     )
   )
+}
+
+#* LNURL Callback
+#* @get /lnurl/callback/<id>
+function(id, amount, comment = "") {
+  if (missing(amount) || !is.numeric(as.numeric(amount))) {
+    return(list(error = "Missing or invalid amount"))
+  }
+  
+  reviews[[id]] <- list(
+    status = "paid",
+    amount = as.numeric(amount) / 1000,
+    comment = comment,
+    time = Sys.time()
+  )
+  
+  list(
+    pr = "lnbc1REPLACE_WITH_REAL_INVOICE",
+    routes = list()
+  )
+}
+
+#* Review Status
+#* @get /review/status/<id>
+function(id) {
+  reviews[[id]] %||% list(status = "unknown")
 }
