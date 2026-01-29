@@ -37,23 +37,28 @@ function(id) {
 }
 
 #* @get /lnurl/callback/<id>
-#* @get /lnurl/callback/<id>
 function(id, req, res) {
-
-  cat("DEBUG: class(req) =", class(req), "\n")
-  cat("DEBUG: is.list(req) =", is.list(req), "\n")
-  cat("DEBUG: names(req) =", paste(names(req), collapse = ", "), "\n")
+  # Use req$argsQuery for parsed query parameters
+  amount_str <- req$argsQuery$amount
   
-  amount_str <- req$QUERY_STRING$amount
-  amount <- if (is.null(amount_str) || amount_str == "" || !grepl("^[0-9]+$", amount_str)) {
-    1000000L
+  # Safely convert to numeric with fallback
+  amount <- if (is.null(amount_str) || length(amount_str) == 0 || !grepl("^[0-9]+$", amount_str)) {
+    1000000L  # fallback to 1000 sats (in millisats)
   } else {
     as.numeric(amount_str)
   }
   
+  # Optional debug logging to Render logs (remove later if you want)
+  cat("DEBUG: amount from query =", amount, "\n")
+  
+  # Call your handler
   response_data <- callback_handler(id, amount)
   
-  jsonlite::toJSON(response_data, auto_unbox = TRUE)
+  # Serialize and return
+  jsonlite::toJSON(
+    response_data,
+    auto_unbox = TRUE
+  )
 }
 
 # Helper function – now takes amount as argument
