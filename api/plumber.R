@@ -36,32 +36,37 @@ function(id) {
   )
 }
 
-#* LNURL Callback
 #* @get /lnurl/callback/<id>
-# Callback handler – identical style to your payRequest function
-callback_handler <- function(id) {
-  # amount handling (from query param, millisats)
-  amount <- as.numeric(req$QUERY_STRING$amount)  # or however you get it
-  if (is.na(amount)) amount <- 1000000L  # fallback
-  
-  # Get or generate the real invoice string here
-  invoice <- "lnbc1p5hhq59pp5xrkrx8vsmpfdhq7gn235p3gglaxnr9umw2zw0rxf2ykw2fk27lgsdqqcqzzsxqrrs0fppqzkk5sjlvqa9f767kkandvjz07dzayju4sp5kly6waup2fk0askspyfmlp9hdh264gewrac8cyplwrw667zuf4kq9qxpqysgq7ja5rc7h23qw9vkl9nhxw79x08m8vpuhfr62frkpez3q6ca44lfkrp5x4tgh3nau9w6utyld7yanmruqmcwkl7a3qkjc8vy7zajuk2splulwy5"
-  
-  # Return plain list – exactly like your payRequest
-  list(
-    pr     = invoice,           # ← plain string (critical: no list(), no c())
-    routes = list()             # empty list
-  )
-}
+function(id, req) {   # ← req is available here
 
-# In your endpoint / Plumber route / Shiny handler
-#* @get /lnurl/callback/<id>
-function(id, req) {
-  response_data <- callback_handler(id)
-  
-  # Serialize once, same as payRequest
+  # Extract amount from query string (millisats)
+  amount_str <- req$QUERY_STRING$amount
+  amount <- if (is.null(amount_str) || amount_str == "") {
+    1000000L   # fallback
+  } else {
+    as.numeric(amount_str)
+  }
+
+  # Call handler (now without needing req)
+  response_data <- callback_handler(id, amount)
+
+  # Serialize once – same as payRequest
   jsonlite::toJSON(
     response_data,
     auto_unbox = TRUE
+  )
+}
+
+# Updated handler – no req needed anymore
+callback_handler <- function(id, amount) {
+
+  # Optional: use amount to adjust invoice if you later generate dynamically
+  # For now it's ignored since invoice is fixed
+
+  invoice <- "lnbc1p5hhq59pp5xrkrx8vsmpfdhq7gn235p3gglaxnr9umw2zw0rxf2ykw2fk27lgsdqqcqzzsxqrrs0fppqzkk5sjlvqa9f767kkandvjz07dzayju4sp5kly6waup2fk0askspyfmlp9hdh264gewrac8cyplwrw667zuf4kq9qxpqysgq7ja5rc7h23qw9vkl9nhxw79x08m8vpuhfr62frkpez3q6ca44lfkrp5x4tgh3nau9w6utyld7yanmruqmcwkl7a3qkjc8vy7zajuk2splulwy5"
+
+  list(
+    pr     = invoice,           # plain string – no list() or c()
+    routes = list()
   )
 }
