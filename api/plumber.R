@@ -38,39 +38,30 @@ function(id) {
 
 #* LNURL Callback
 #* @get /lnurl/callback/<id>
-callback_handler <- function(id, amount = NULL) {
-  # Handle amount (millisats from query)
-  if (is.null(amount)) amount <- 1000000L  # fallback or error
+# Callback handler – identical style to your payRequest function
+callback_handler <- function(id) {
+  # amount handling (from query param, millisats)
+  amount <- as.numeric(req$QUERY_STRING$amount)  # or however you get it
+  if (is.na(amount)) amount <- 1000000L  # fallback
   
-  # Your real invoice generation logic here
+  # Get or generate the real invoice string here
   invoice <- "lnbc1p5hhq59pp5xrkrx8vsmpfdhq7gn235p3gglaxnr9umw2zw0rxf2ykw2fk27lgsdqqcqzzsxqrrs0fppqzkk5sjlvqa9f767kkandvjz07dzayju4sp5kly6waup2fk0askspyfmlp9hdh264gewrac8cyplwrw667zuf4kq9qxpqysgq7ja5rc7h23qw9vkl9nhxw79x08m8vpuhfr62frkpez3q6ca44lfkrp5x4tgh3nau9w6utyld7yanmruqmcwkl7a3qkjc8vy7zajuk2splulwy5"
   
-  # Return plain list – exactly like payRequest
+  # Return plain list – exactly like your payRequest
   list(
-    pr     = invoice,            # ← plain character string (NO list() or c())
-    routes = list()              # empty list
+    pr     = invoice,           # ← plain string (critical: no list(), no c())
+    routes = list()             # empty list
   )
 }
 
-#* Review Status
-#* @get /review/status/<id>
-function(id) {
-  reviews[[id]] %||% list(status = "unknown")
-}
-
-# Example Plumber style (adapt to your actual setup)
+# In your endpoint / Plumber route / Shiny handler
 #* @get /lnurl/callback/<id>
-function(id, req, res) {
-  # Get amount from query string
-  amount_str <- req$QUERY_STRING$amount
-  amount <- if (is.null(amount_str)) NULL else as.numeric(amount_str)
+function(id, req) {
+  response_data <- callback_handler(id)
   
-  # Call the function – same pattern as payRequest
-  response_data <- callback_fn(id, amount)
-  
-  # Serialize **once only** – just like your payRequest
-jsonlite::toJSON(
-  callback_handler(id, amount),
-  auto_unbox = TRUE
-)
+  # Serialize once, same as payRequest
+  jsonlite::toJSON(
+    response_data,
+    auto_unbox = TRUE
+  )
 }
