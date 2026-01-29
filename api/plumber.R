@@ -38,25 +38,17 @@ function(id) {
 
 #* LNURL Callback
 #* @get /lnurl/callback/<id>
-callback_fn <- function(id, amount = NULL) {   # amount comes from query param
+callback_handler <- function(id, amount = NULL) {
+  # Handle amount (millisats from query)
+  if (is.null(amount)) amount <- 1000000L  # fallback or error
   
-  # Optional: validate or log the requested amount (in millisats)
-  if (is.null(amount)) {
-    amount <- 1000000L  # fallback, or return error
-  }
-  
-  # Here: generate / fetch the REAL BOLT11 invoice
-  # Replace this placeholder with your actual invoice creation logic
+  # Your real invoice generation logic here
   invoice <- "lnbc1p5hhq59pp5xrkrx8vsmpfdhq7gn235p3gglaxnr9umw2zw0rxf2ykw2fk27lgsdqqcqzzsxqrrs0fppqzkk5sjlvqa9f767kkandvjz07dzayju4sp5kly6waup2fk0askspyfmlp9hdh264gewrac8cyplwrw667zuf4kq9qxpqysgq7ja5rc7h23qw9vkl9nhxw79x08m8vpuhfr62frkpez3q6ca44lfkrp5x4tgh3nau9w6utyld7yanmruqmcwkl7a3qkjc8vy7zajuk2splulwy5"
   
-  # Return the EXACT same kind of plain list as your payRequest function
+  # Return plain list – exactly like payRequest
   list(
-    pr     = invoice,                  # ← plain string, NOT list() or c()
-    routes = list()                    # empty list
-    # successAction = list(
-    #   tag = "message",
-    #   message = "Thanks for the Thunder Review! ⚡️"
-    # )
+    pr     = invoice,            # ← plain character string (NO list() or c())
+    routes = list()              # empty list
   )
 }
 
@@ -77,9 +69,8 @@ function(id, req, res) {
   response_data <- callback_fn(id, amount)
   
   # Serialize **once only** – just like your payRequest
-  jsonlite::toJSON(
-    response_data,
-    auto_unbox = TRUE,
-    pretty     = FALSE
-  )
+jsonlite::toJSON(
+  callback_handler(id, amount),
+  auto_unbox = TRUE
+)
 }
