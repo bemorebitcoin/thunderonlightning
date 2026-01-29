@@ -37,24 +37,23 @@ function(id) {
 }
 
 #* @get /lnurl/callback/<id>
-function(id, req) {   # req is available here
+#* @get /lnurl/callback/<id>
+function(id, req, res) {
 
-  # Extract and parse amount from query string (millisats)
+  cat("DEBUG: class(req) =", class(req), "\n")
+  cat("DEBUG: is.list(req) =", is.list(req), "\n")
+  cat("DEBUG: names(req) =", paste(names(req), collapse = ", "), "\n")
+  
   amount_str <- req$QUERY_STRING$amount
   amount <- if (is.null(amount_str) || amount_str == "" || !grepl("^[0-9]+$", amount_str)) {
-    1000000L   # fallback to 1000 sats
+    1000000L
   } else {
     as.numeric(amount_str)
   }
-
-  # Call handler with amount
+  
   response_data <- callback_handler(id, amount)
-
-  # Serialize once
-  jsonlite::toJSON(
-    response_data,
-    auto_unbox = TRUE
-  )
+  
+  jsonlite::toJSON(response_data, auto_unbox = TRUE)
 }
 
 # Helper function – now takes amount as argument
