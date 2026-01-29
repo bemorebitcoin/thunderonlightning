@@ -29,6 +29,7 @@ function(id) {
     minSendable    = 1000L,
     maxSendable    = 500000L,
     commentAllowed = 500L,
+    units          = "sat",
     metadata       = jsonlite::toJSON(
       list(list("text/plain", "Thunder Review")),
       auto_unbox = TRUE
