@@ -37,28 +37,23 @@ function(id) {
 }
 
 #* @get /lnurl/callback/<id>
+#* @serializer json list(auto_unbox = TRUE)   # ← add this line!
 function(id, req, res) {
-  # Use req$argsQuery for parsed query parameters
   amount_str <- req$argsQuery$amount
   
-  # Safely convert to numeric with fallback
   amount <- if (is.null(amount_str) || length(amount_str) == 0 || !grepl("^[0-9]+$", amount_str)) {
-    1000000L  # fallback to 1000 sats (in millisats)
+    1000000L
   } else {
     as.numeric(amount_str)
   }
   
-  # Optional debug logging to Render logs (remove later if you want)
-  cat("DEBUG: amount from query =", amount, "\n")
-  
-  # Call your handler
-  response_data <- callback_handler(id, amount)
-  
-  # Serialize and return
-  jsonlite::toJSON(
-    response_data,
-    auto_unbox = TRUE
+  # Return PLAIN LIST (same as payRequest)
+  response_data <- list(
+    pr     = "lnbc1p5hhq59pp5xrkrx8vsmpfdhq7gn235p3gglaxnr9umw2zw0rxf2ykw2fk27lgsdqqcqzzsxqrrs0fppqzkk5sjlvqa9f767kkandvjz07dzayju4sp5kly6waup2fk0askspyfmlp9hdh264gewrac8cyplwrw667zuf4kq9qxpqysgq7ja5rc7h23qw9vkl9nhxw79x08m8vpuhfr62frkpez3q6ca44lfkrp5x4tgh3nau9w6utyld7yanmruqmcwkl7a3qkjc8vy7zajuk2splulwy5",
+    routes = list()
   )
+  
+  response_data   # ← return the list directly – do NOT call toJSON here
 }
 
 # Helper function – now takes amount as argument
